@@ -1,0 +1,33 @@
+담당 모듈 (snmpa, pgms-emass, pfm)
+
+SNMPA
+ snmp 
+  - 네트워크 장비를 관리하고 또는 감시하기 위한 목적으로 정의된 응용계층 프로토콜
+  - udp 통신을 사용 (port : 7791~7794) 사용
+  - snmp 망에서 snmp manager/snmp agent 로 나뉘는데 
+  - manager : snmp agent가 설치된 시스템에 필요한 정보를 요청하는 snmp 모듈
+  - agent : 관리대상이 되는 시스템에 설치되어서 필요한 정보(네트워크 혹은 시스템)를 수집하기 위한 snmp 모듈
+  - mib : 관리 되어야할 자원 객체의 분류된 정보를 모아놓은 집합체(시스템정보, 네트워크 사용량....)
+
+ agent
+  - 현재 agent 모듈을 담당
+
+  - 사용자가 화면 요청시
+     - manager→agentX로 SNMP-GET request 전송
+     - agentX는 해당 MIB 값 보고 sub-agent로 전달
+     - 메시지 받은 sub-agent는 값을 처리하여 agentX로 SNMP-GET response 전송
+     - agentX→manager로 SNMP-GET response 전송
+
+
+PGMS-EMASS (tellus로 부터 데이터를 수신하여 프로토콜별로 파싱 후 로그파일을 만드는 분석단)
+  - 네트워크 정보유출 방지를 위해서, 이메일, 웹, 메신저, 파일전송 등을 로깅하는 시스템
+  - 지원 프로토콜 : 웹, 웹메일, 전자메일(smtp,pop3....), 메신저, 파일전송(ftp)
+  - DPD로 부터 데이터를 수신하고, 파싱 후 로그 파일을 만드는 역할을 한다
+  - DPD와 소켓통신으로 데이터를 수신
+  - 프로토콜 별로 파싱하여 로그파일 작성 (http,ftp,메신저 등...)
+  - 
+
+
+PFM
+ - 현재 진행중인 LP 장비에만 적용되어 있는 모듈
+ - 수집 장비의 수집 포트에 대한 tcpdump tool 실행 및 동작 모니터링, 생성된 pcap 파일에 대한 report 파일 생성 등 pcap 파일 관리 기능을 수행하는 모듈
